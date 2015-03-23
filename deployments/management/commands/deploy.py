@@ -7,9 +7,9 @@ from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from django.core.management import call_command
 from instances import enumerate_instances
+from django.apps import apps
 
-TEST_APPS = ['feed', 'profiles', 'notifications', 'companies', 'api',]
-
+TEST_APPS = [app for app in settings.INSTALLED_APPS if not app.startswith('django')]
 
 class Command(BaseCommand):
 	args = ''

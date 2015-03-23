@@ -14,6 +14,7 @@ setup(
     install_requires=[
         'Django>=1.7',
         'boto==2.36.0',
+        'GitPython==0.3.2rc1',
     ],
     include_package_data=True,
     license='BSD License',
