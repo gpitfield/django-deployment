@@ -1,1 +1,2 @@
+clean up models
 add --migrate option to deploy

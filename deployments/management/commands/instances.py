@@ -12,6 +12,7 @@ SERVER_KEYPATH = getattr(settings, 'SERVER_KEYPATH', None)
 UPDATE_SCRIPT = getattr(settings, 'UPDATE_SCRIPT', None)
 
 def enumerate_instances(update=False, monitor=False):
+	project_name = os.path.split(settings.BASE_DIR)[1]
 	ec2_conn = EC2Connection(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
 	reservations = ec2_conn.get_all_instances()
 	print 'Please enter the number of the instance to connect to:'
@@ -20,10 +21,11 @@ def enumerate_instances(update=False, monitor=False):
 	for reservation in reservations:
 		for instance in reservation.instances:
 			if instance.state == 'running':
-				instances.append(instance.dns_name)
-				instance_name = ' - %s'%instance.tags['Name'] if 'Name' in instance.tags else ''
-				print '[%d] %s (%s)%s'%(i, str(instance.dns_name), str(instance.instance_type), instance_name)
-				i = i + 1
+				if instance.tags.get('project', None) in [project_name, None]:
+					instances.append(instance.dns_name)
+					instance_name = ' - %s'%instance.tags['Name'] if 'Name' in instance.tags else ''
+					print '[%d] %s (%s)%s'%(i, str(instance.dns_name), str(instance.instance_type), instance_name)
+					i = i + 1
 	selection = raw_input()
 	if selection:
 		selection = selection.split(',')
