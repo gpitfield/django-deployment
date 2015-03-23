@@ -1,9 +1,9 @@
 import os, sys
 import urllib
 from boto.ec2.connection import EC2Connection
-from django.conf import settings
 
 def environment():
+	from django.conf import settings
 	ENVIRONMENT = os.environ.get('ENVIRONMENT')
 	IS_TEST = any([el in sys.argv for el in ('test', 'deploy')])
 	IS_DEVELOPMENT = ENVIRONMENT == 'dev' and not IS_TEST
