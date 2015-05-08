@@ -39,7 +39,7 @@ def enumerate_instances(update=False, monitor=False):
 				print 'Please supply the location of the UPDATE_SCRIPT in your settings.'
 			elif update:
 				connect = ['ssh', '-i', SERVER_KEYPATH, '-t', 'ec2-user@' + instance]
-				script = connect + ['sudo ', UPDATE_SCRIPT, 'canary']
+				script = connect + ['sudo ', UPDATE_SCRIPT, project_name]
 				subprocess.call(script)
 	elif monitor:
 		selection = selection[0]
